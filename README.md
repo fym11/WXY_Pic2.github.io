@@ -1,1 +1,1 @@
-# WXY_Pic2.github.io
+# WXY_Picture Show Site
