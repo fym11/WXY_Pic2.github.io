@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PictureShowSite</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .image-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        .controls button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .controls button:hover {
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        .image-stack img {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-stack">
+            <img src="image7.jpg" alt="Image 1">
+            <img src="image8.jpg" alt="Image 2">
+            <img src="image9.jpg" alt="Image 3">
+            <img src="image10.jpg" alt="Image 4">
+            <img src="image11.jpg" alt="Image 1">
+            <img src="image12.jpg" alt="Image 2">
+            <img src="image13.jpg" alt="Image 3">
+            <img src="image14.jpg" alt="Image 4">
+            <img src="image15.jpg" alt="Image 2">
+            <img src="image16.jpg" alt="Image 3">
+            <img src="image17.jpg" alt="Image 4">
+            <img src="image18.jpg" alt="Image 1">
+            <img src="image19.jpg" alt="Image 2">
+            <img src="image20.jpg" alt="Image 3">
+            <img src="image21.jpg" alt="Image 4">
+            <img src="image22.jpg" alt="Image 1">
+            <img src="image23.jpg" alt="Image 2">
+            <img src="image24.jpg" alt="Image 3">
+            <img src="image25.jpg" alt="Image 4">
+            <img src="image26.jpg" alt="Image 1">
+            <img src="image27.jpg" alt="Image 2">
+            <img src="image28.jpg" alt="Image 3">
+            <img src="image29.jpg" alt="Image 4">
+            <img src="image30.jpg" alt="Image 2">
+            <img src="image31.jpg" alt="Image 3">
+            <img src="image32.jpg" alt="Image 4">
+            <img src="image33.jpg" alt="Image 1">
+            <img src="image34.jpg" alt="Image 2">
+            <img src="image35.jpg" alt="Image 3">
+            <img src="image36.jpg" alt="Image 4">
+            <img src="image37.jpg" alt="Image 1">
+            <img src="image38.jpg" alt="Image 2">
+            <img src="image39.jpg" alt="Image 3">
+            <img src="image40.jpg" alt="Image 4">
+            <img src="image41.jpg" alt="Image 1">
+            <img src="image42.jpg" alt="Image 2">
+            <img src="image43.jpg" alt="Image 3">
+            <img src="image44.jpg" alt="Image 4">
+            <img src="image45.jpg" alt="Image 2">
+            <img src="image46.jpg" alt="Image 3">
+            <img src="image47.jpg" alt="Image 4">
+        </div>
+        <div class="image-container">
+            <img id="mainImage" src="" alt="图片展示">
+        </div>
+        <div class="controls">
+            <button id="prevButton">‹</button>
+            <button id="playPauseButton">❚❚</button>
+            <button id="nextButton">›</button>
+        </div>
+    </div>
+
+    <script>
+        const imageStack = document.querySelectorAll('.image-stack img');
+        let currentIndex = 0;
+        let playInterval;
+        let isPlaying = true;
+        const mainImage = document.getElementById('mainImage');
+
+        function updateImage() {
+            mainImage.src = imageStack[currentIndex].src;
+        }
+
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % imageStack.length;
+            updateImage();
+        }
+
+        function showPrevImage() {
+            currentIndex = (currentIndex - 1 + imageStack.length) % imageStack.length;
+            updateImage();
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                clearInterval(playInterval);
+                document.getElementById('playPauseButton').textContent = '▶';
+            } else {
+                playInterval = setInterval(showNextImage, 4000);
+                document.getElementById('playPauseButton').textContent = '❚❚';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        document.getElementById('nextButton').addEventListener('click', showNextImage);
+        document.getElementById('prevButton').addEventListener('click', showPrevImage);
+        document.getElementById('playPauseButton').addEventListener('click', togglePlayPause);
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') showNextImage();
+            if (event.key === 'ArrowLeft') showPrevImage();
+            if (event.key === ' ') togglePlayPause();
+        });
+
+        window.onload = () => {
+            updateImage();
+            playInterval = setInterval(showNextImage, 4000);
+        };
+    </script>
+</body>
+</html>
